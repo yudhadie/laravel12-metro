@@ -25,7 +25,7 @@
                                 @include('admin.templates.partials.alert')
 
 								<div class="fv-row mb-8">
-                                    <input id="email" type="text" name="email" required placeholder="Masukkan username atau email" class="form-control" autofocus>
+                                    <input id="email" type="text" name="email" required placeholder="Masukkan username atau email" value="{{ old('email') }}" class="form-control" autofocus>
 								</div>
 								<div class="fv-row mb-5">
 									<input type="password" placeholder="Password" name="password" autocomplete="off" class="form-control bg-transparent" />

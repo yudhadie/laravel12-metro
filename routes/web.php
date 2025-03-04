@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CacheController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Information\LogActivityController;
 use App\Http\Controllers\Admin\Test\TestContentController;
@@ -27,6 +28,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin']], function
     //Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    //Cache
+    Route::get('/cc', [CacheController::class, 'clearCache']);
+    Route::get('/op', [CacheController::class, 'optimize']);
     //Setting
         //User
         Route::resource('setting/user', UserController::class);
