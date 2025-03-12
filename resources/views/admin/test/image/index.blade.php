@@ -16,7 +16,7 @@
 
     <x-admin.modal.create :title="$title" action="{{ route('test-image.store') }}" enctype="multipart/form-data" >
         <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" required />
-        <x-admin.form.input class="col-12 mb-5" label="Image" name="img" type="file" value="" accept=".jpg,.jpeg,.png" required />
+        <x-admin.form.input class="col-12 mb-5" label="Image" name="cover" type="file" value="" accept=".jpg,.jpeg,.png" required />
     </x-admin.modal.create>
 
     <x-admin.modal.default :title="'Detail Data'" id="modal_show">
@@ -26,7 +26,7 @@
             {{ csrf_field() }}
             {{ method_field('PUT') }}
             <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" id="modal_name" required />
-            <x-admin.form.input class="col-12 mb-5" label="Image" name="img" type="file" value="" id="modal_img" accept=".jpg,.jpeg,.png" />
+            <x-admin.form.input class="col-12 mb-5" label="Image" name="cover" type="file" value="" id="modal_img" accept=".jpg,.jpeg,.png" />
             <div class="mb-3 text-center">
                 <img id="modal_image" src="" alt="Gambar Tidak Tersedia" class="img-fluid" style="display: none; max-height: 200px; object-fit: contain;">
             </div>

@@ -16,11 +16,11 @@
                 <option value="2" @selected($data->active == 2)>Non Active</option>
             </x-admin.form.select-right>
             <x-admin.form.input-right label="Reset Password" name="password" type="password" value=""/>
-            <x-admin.form.input-right label="Photo Profile" name="photo" type="file" value="{{ $data->photo }}" accept=".jpeg,.jpg,.png">
-                @if (!empty($data->photo))
-                    <img class="mw-100 mh-300px card-rounded mb-2" src="{{ asset($data->photo) }}"/>
+            <x-admin.form.input-right label="Photo Profile" name="photo" type="file" value="" accept=".jpeg,.jpg,.png">
+                @if ($data->photo)
+                    <img class="mw-100 mh-300px card-rounded mb-2" src="{{ $data->photo_profile }}"/>
                     <div class="mt-1">
-                        <button class="btn btn-danger btn-sm mb-2" href="{{ route('delete-photo-user',$data->id) }}" id="delete" >
+                        <button class="btn btn-danger btn-sm mb-2" href="{{ route('media.destroy', $data->photo->id ) }}" id="delete">
                             Delete
                         </button>
                     </div>
@@ -34,7 +34,7 @@
         </x-admin.form.edit>
     </x-admin.card.default>
 
-    <x-admin.form.delete-photo :item='$data->id'/>
+    <x-admin.form.delete-media/>
 
 @endsection
 
@@ -47,7 +47,7 @@
 
     <x-admin.menu.show menu="menu-setting"/>
     <x-admin.menu.active menu="menu-setting-user"/>
-    <x-admin.alert.delete-photo/>
+    <x-admin.alert.delete-media/>
     <x-admin.script.validation>
         fields: {
             'name': {validators: {notEmpty: {message: 'Silahkan isi nama!'}}},

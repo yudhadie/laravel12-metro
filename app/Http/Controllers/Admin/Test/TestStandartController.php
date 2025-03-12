@@ -84,7 +84,7 @@ class TestStandartController extends Controller
     public function data()
     {
         $data = TestData::query()
-            ->select('id','name','desc','img','number','select');
+            ->select('id','name','desc','number','select');
 
         return datatables()->of($data)
             ->addIndexColumn()

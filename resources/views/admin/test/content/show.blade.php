@@ -7,6 +7,11 @@
             <h2>{{$data->name}}</h2>
             {!! $data->desc !!}
         </div>
+
+        @foreach ($data->gallery as $gallery)
+            <img class="mw-100 mh-300px card-rounded mb-2" src="{{ asset($gallery->path) }}"/>
+        @endforeach
+
         <x-admin.card.footer>
             <x-admin.button.back href="{{route('test-content.index')}}"/>
         </x-admin.card.footer>

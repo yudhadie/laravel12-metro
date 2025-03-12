@@ -24,25 +24,29 @@ class TestImageController extends Controller
         $img = null;
         $request->validate([
             'name' => 'required|unique:test_data',
-            'img' => 'required|file',
+            'cover' => 'required|file',
         ], [
             'name.required' => 'Nama wajib diisi!',
             'name.unique' => 'Nama sudah terdaftar, silakan gunakan nama lain!',
-            'img.required' => 'Image wajib upload!',
+            'cover.required' => 'Image wajib upload!',
         ]);
 
-        if ($request->hasFile('img')) {
-            $photo = $request->file('img');
-            $img = 'uploads/test/'.time().'.'.$request->img->extension();
-            $image = ImageManager::imagick()->read(file_get_contents($photo));
-            $image->scale(height: 500);
-            $image->save($img);
-        }
-
-        $data =  new TestData();
+        $data = new TestData();
         $data->name = $request->name;
-        $data->img = $img;
         $data->save();
+
+        if ($request->hasFile('cover')) {
+            $img = $request->file('cover');
+            $cover = 'uploads/test/'.time().'.'.$request->cover->extension();
+            $image = ImageManager::imagick()->read(file_get_contents($img));
+            $image->scale(height: 1000);
+            $image->save($cover);
+
+            $data->media()->create([
+                'path' => $cover,
+                'type' => 'cover',
+            ]);
+        }
 
         return response()->json(['message' => 'Data berhasil ditambah!']);
     }
@@ -72,18 +76,21 @@ class TestImageController extends Controller
             'name' => $request->name,
         ]);
 
-        if ($request->hasFile('img')) {
-            $img = $data->img;
-            if ($img != null) {
-                Storage::delete($img);
+        if ($request->hasFile('cover')) {
+
+            if ($data->cover) {
+                $data->cover->first()->delete();
             }
-            $photo = $request->file('img');
-            $img = 'uploads/test/'.time().'.'.$request->img->extension();
-            $image = ImageManager::imagick()->read(file_get_contents($photo));
-            $image->scale(height: 500);
-            $image->save($img);
-            $data->update([
-                'img' => $img,
+
+            $img = $request->file('cover');
+            $cover = 'uploads/test/'.time().'.'.$request->cover->extension();
+            $image = ImageManager::imagick()->read(file_get_contents($img));
+            $image->scale(height: 1000);
+            $image->save($cover);
+
+            $data->media()->create([
+                'path' => $cover,
+                'type' => 'cover',
             ]);
         }
 
@@ -93,10 +100,6 @@ class TestImageController extends Controller
     public function destroy(string $id)
     {
         $data = TestData::find($id);
-        $img = $data->img;
-        if ($img != null) {
-            Storage::delete($img);
-        }
         $data->delete();
     }
 }

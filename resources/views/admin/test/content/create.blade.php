@@ -3,12 +3,13 @@
 @section('content')
 
     <x-admin.card.default>
-        <form id="modal_form_form" action="{{ route('test-content.store') }}" method="post">
+        <form id="modal_form_form" action="{{ route('test-content.store') }}" method="post" enctype="multipart/form-data" >
             {{ csrf_field() }}
             {{ method_field('POST') }}
             <div class="d-flex flex-column fv-row mt-5">
                 <div class="row">
                     <x-admin.form.input class="col-6 mb-5" label="Nama" name="name" type="text" value="" required />
+                    <x-admin.form.input class="col-7 mb-5" label="Gallery" name="gallery[]" type="file" value="" accept=".jpg,.jpeg,.png" multiple />
                     <x-admin.form.label class="col-12 mb-5" label="Deskripsi">
                         <textarea name="desc" id="editor" class="tox-target"></textarea>
                     </x-admin.form.label>

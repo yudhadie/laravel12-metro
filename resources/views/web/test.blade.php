@@ -89,7 +89,7 @@
 
     <x-admin.menu.active menu="menu-test"/>
     <script>
-        const apiUrl = "http://laravel11.test/api/test";
+        const apiUrl = "{{ route('api.test') }}";
 
         // Function to fetch data from the API
         async function fetchData() {
@@ -99,6 +99,7 @@
                     throw new Error("Failed to fetch data");
                 }
                 const data = await response.json();
+                console.log("API Response:", data);
                 renderCards(data.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -108,25 +109,26 @@
         // Function to render cards after data is fetched
         function renderCards(data) {
             const container = document.getElementById("cards-container");
-
             // Clear skeletons
             container.innerHTML = "";
-
             data.forEach(item => {
                 // Create card element
                 const card = document.createElement("div");
                 card.classList.add("col-lg-4", "mb-4");
-
+                function stripHtml(html) {
+                    let tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = html;
+                    return tempDiv.innerText || tempDiv.textContent;
+                }
                 card.innerHTML = `
                     <div class="card">
-                        <img src="${item.photo}" class="card-img-top" alt="${item.name}" style="height: 200px; object-fit: cover;">
+                        <img src="${item.cover}" class="card-img-top" alt="${item.name}" style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title">${item.name}</h5>
-                            <p class="card-text">${item.desc || "No description available."}</p>
+                            <p class="card-text">${stripHtml(item.desc) || "No description available."}</p>
                         </div>
                     </div>
                 `;
-
                 // Append card to container
                 container.appendChild(card);
             });

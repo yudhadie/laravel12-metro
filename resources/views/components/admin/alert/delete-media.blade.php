@@ -12,8 +12,8 @@
             confirmButtonText: 'Ya, Hapus saja!'
             }).then((result) => {
                 if (result.value) {
-                    document.getElementById('deletePhoto').action = href;
-                    document.getElementById('deletePhoto').submit();
+                    document.getElementById('deleteMedia').action = href;
+                    document.getElementById('deleteMedia').submit();
                     Swal.fire(
                     'Terhapus!!',
                     'Data kamu berhasil di hapus',

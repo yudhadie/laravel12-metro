@@ -68,13 +68,21 @@ class User extends Authenticatable
         return $this->getRoleNames()->first();
     }
 
+    public function media()
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
+
+    public function photo()
+    {
+        return $this->morphOne(Media::class, 'mediable')->where('type', 'profile');
+    }
+
     public function getPhotoProfileAttribute()
     {
-        if ($this->photo == null) {
-            $photo = 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=7F9CF5&background=EBF4FF';
-        } else {
-            $photo = $this->photo;
+        if ($this->photo) {
+            return $this->photo->url;
         }
-        return $photo;
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
     }
 }

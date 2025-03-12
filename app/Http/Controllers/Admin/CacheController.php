@@ -24,4 +24,11 @@ class CacheController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Cache telah dibersihkan!');
     }
+
+    public function storage()
+    {
+        Artisan::call('storage:link');
+
+        return redirect()->route('dashboard')->with('success', 'Storage berhasil dilink!');
+    }
 }

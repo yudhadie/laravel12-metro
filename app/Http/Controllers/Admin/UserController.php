@@ -42,7 +42,7 @@ class UserController extends Controller
             'email' => 'required|unique:users|max:255',
         ]);
 
-        $data =  new User();
+        $data = new User();
         $data->name = $request->name;
         $data->email = $request->email;
         $data->username = $request->username;
@@ -86,12 +86,11 @@ class UserController extends Controller
         ]);
 
         $data = User::find($id);
-        $photo = $data->photo;
 
         if ($request->hasFile('photo')) {
 
-            if ($photo && Storage::exists($photo)) {
-                Storage::delete($photo);
+            if ($data->photo) {
+                $data->photo->first()->delete();
             }
 
             $img = $request->file('photo');
@@ -99,13 +98,17 @@ class UserController extends Controller
             $image = ImageManager::imagick()->read(file_get_contents($img));
             $image->scale(height: 500);
             $image->save($photo);
+
+            $data->media()->create([
+                'path' => $photo,
+                'type' => 'profile',
+            ]);
         }
 
         $data->update([
             'name' => $request->name,
             'email' => $request->email,
             'active' => $request->active,
-            'photo' => $photo,
         ]);
 
         $data->syncRoles($request->role);
@@ -148,19 +151,6 @@ class UserController extends Controller
             'breadcrumbs' => Breadcrumbs::render('profile'),
             'data' => $data,
         ]);
-    }
-
-    public function deletephoto(string $id)
-    {
-        $data = User::findOrFail($id);
-        $photo = $data->photo;
-
-        if ($photo && Storage::exists($photo)) {
-            Storage::delete($photo);
-            $data->update(['photo' => null]);
-        }
-
-        return redirect()->back()->with('error', 'Photo Profile berhasil dihapus');
     }
 
     public function data()

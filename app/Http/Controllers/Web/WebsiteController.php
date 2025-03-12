@@ -39,7 +39,7 @@ class WebsiteController extends Controller
 
         return datatables()->of($data)
         ->addIndexColumn()
-        ->addColumn('photo', fn($data) => $data->photo)
+        ->addColumn('cover', fn($data) => $data->cover_url)
         ->toJson();
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class TestData extends Model
 {
@@ -16,13 +17,40 @@ class TestData extends Model
         return $this->belongsToMany(TestTag::class, 'test_data_tag');
     }
 
-    public function getPhotoAttribute()
+    public function media()
     {
-        if ($this->img == null) {
-            $photo = asset('assets/media/no-image.jpg');
-        } else {
-            $photo = $this->img;
+        return $this->morphMany(Media::class, 'mediable');
+    }
+
+    public function cover()
+    {
+        return $this->morphOne(Media::class, 'mediable')->where('type', 'cover');
+    }
+
+    public function getCoverUrlAttribute()
+    {
+        if ($this->cover) {
+            return asset($this->cover->path);
         }
-        return $photo;
+        return asset('assets/media/no-image.jpg');
+    }
+
+    public function gallery()
+    {
+        return $this->morphMany(Media::class, 'mediable')->where('type', 'gallery');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($test) {
+            foreach ($test->media as $media) {
+                if ($media->path && Storage::exists($media->path)) {
+                    Storage::delete($media->path);
+                }
+                $media->delete();
+            }
+        });
     }
 }

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('test_data', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('desc')->nullable();
-            $table->integer('number')->nullable()->default(0);
-            $table->string('select')->nullable()->default('no');
+            $table->morphs('mediable'); // Ini untuk polymorphic relation
+            $table->string('path');
+            $table->enum('type', ['cover', 'gallery', 'profile']);
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('test_data');
+        Schema::dropIfExists('media');
     }
 };

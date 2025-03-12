@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CacheController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Information\LogActivityController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\Test\TestContentController;
 use App\Http\Controllers\Admin\Test\TestImageController;
 use App\Http\Controllers\Admin\Test\TestModalController;
@@ -23,7 +24,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin']], function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth','role:admin']], function() {
 
     //Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -31,11 +32,13 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['role:admin']], function
     //Cache
     Route::get('/cc', [CacheController::class, 'clearCache']);
     Route::get('/op', [CacheController::class, 'optimize']);
+    Route::get('/storage', [CacheController::class, 'storage']);
+    //Media
+    Route::put('/media/destroy/{id}', [MediaController::class, 'destroy'])->name('media.destroy');
     //Setting
         //User
         Route::resource('setting/user', UserController::class);
         Route::get('/setting/user-data', [UserController::class, 'data'])->name('user.data');
-        Route::put('/photo/delete-user-profile/{id}', [UserController::class, 'deletephoto'])->name('delete-photo-user');
     //Information
     Route::resource('information/log-activity', LogActivityController::class);
     Route::get('information/log-activity-data', [LogActivityController::class, 'data'])->name('activity.data');

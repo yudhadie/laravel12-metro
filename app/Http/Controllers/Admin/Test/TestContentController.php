@@ -7,6 +7,9 @@ use App\Models\TestData;
 use App\Models\TestTag;
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
 
 class TestContentController extends Controller
 {
@@ -39,6 +42,20 @@ class TestContentController extends Controller
         $data->name = $request->name;
         $data->desc = $request->desc;
         $data->save();
+
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $gallerys) {
+                $img = $gallerys;
+                $gallery = 'uploads/test/'.Str::random(10).'.'.$img->extension();
+                $image = ImageManager::imagick()->read(file_get_contents($img));
+                $image->scale(height: 1000);
+                $image->save($gallery);
+                $data->media()->create([
+                    'path' => $gallery,
+                    'type' => 'gallery',
+                ]);
+            }
+        }
 
         $data->tag()->sync($request->tag);
 
@@ -86,6 +103,20 @@ class TestContentController extends Controller
             'name' => $request->name,
             'desc' => $request->desc,
         ]);
+
+        if ($request->hasFile('gallery')) {
+            foreach ($request->file('gallery') as $gallerys) {
+                $img = $gallerys;
+                $gallery = 'uploads/test/'.Str::random(10).'.'.$img->extension();
+                $image = ImageManager::imagick()->read(file_get_contents($img));
+                $image->scale(height: 1000);
+                $image->save($gallery);
+                $data->media()->create([
+                    'path' => $gallery,
+                    'type' => 'gallery',
+                ]);
+            }
+        }
 
         $data->tag()->sync($request->tag);
 
