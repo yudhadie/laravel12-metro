@@ -34,12 +34,7 @@
     <x-admin.menu.active menu="menu-test-content"/>
     <x-admin.script.validation>
         fields: {
-            'name': {
-                validators: {
-                    notEmpty: {
-                        message: 'Silahkan isi nama!'
-                    }
-                }
+            'name': {validators: {notEmpty: {message: 'Silahkan isi nama!'}}
             },
         },
     </x-admin.script.validation>
