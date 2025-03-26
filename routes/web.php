@@ -19,13 +19,10 @@ Route::get('/test', [WebsiteController::class, 'test'])->name('test');
 Route::get('api/test', [WebsiteController::class, 'api_test'])->name('api.test');
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/profile', [WebsiteController::class, 'profile'])->name('web.profile');
-
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth','role:admin']], function() {
-
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], function () {
     //Dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
@@ -36,9 +33,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','role:admin']], funct
     //Media
     Route::put('/media/destroy/{id}', [MediaController::class, 'destroy'])->name('media.destroy');
     //Setting
-        //User
-        Route::resource('setting/user', UserController::class);
-        Route::get('/setting/user-data', [UserController::class, 'data'])->name('user.data');
+    //User
+    Route::resource('setting/user', UserController::class);
+    Route::get('/setting/user-data', [UserController::class, 'data'])->name('user.data');
     //Information
     Route::resource('information/log-activity', LogActivityController::class);
     Route::get('information/log-activity-data', [LogActivityController::class, 'data'])->name('activity.data');
@@ -50,7 +47,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','role:admin']], funct
     Route::get('/test-data', [TestStandartController::class, 'data'])->name('test.data');
     Route::resource('/test-tag', TestTagController::class);
     Route::get('/test-tag-data', [TestTagController::class, 'data'])->name('tag.data');
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

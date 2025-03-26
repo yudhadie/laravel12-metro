@@ -11,7 +11,7 @@ class TestTagController extends Controller
 {
     public function index()
     {
-        return view('admin.test.tag.index',[
+        return view('admin.test.tag.index', [
             'title' => 'Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
         ]);
@@ -40,7 +40,7 @@ class TestTagController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|unique:test_data,name,'.$id,
+            'name' => 'required|unique:test_data,name,' . $id,
         ]);
 
         $data = TestTag::FindOrFail($id);
@@ -60,7 +60,7 @@ class TestTagController extends Controller
     public function data()
     {
         $data = TestTag::query()
-            ->select('id','name');
+            ->select('id', 'name');
 
         return datatables()->of($data)
             ->addIndexColumn()

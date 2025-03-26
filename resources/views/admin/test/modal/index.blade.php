@@ -1,7 +1,6 @@
 @extends('admin.templates.default')
 
 @section('content')
-
     <x-admin.card.default>
         <x-admin.content.table-api>
             <thead>
@@ -14,12 +13,12 @@
                 </tr>
             </thead>
         </x-admin.content.table-api>
-    </x-admin.default>
-
+    </x-admin.card.default>
     <x-admin.modal.create :title="$title" action="{{ route('test-modal.store') }}">
         <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" required />
         <x-admin.form.input class="col-6 mb-5" label="Number" name="number" type="number" value="" required />
-        <x-admin.form.select-manual class="col-6 mb-5" label="Select" name="select" value="" collection='' data-dropdown-parent="#modal_add" >
+        <x-admin.form.select-manual class="col-6 mb-5" label="Select" name="select" value="" collection=''
+            data-dropdown-parent="#modal_add">
             <option value=""></option>
             <option value="yes">yes</option>
             <option value="no">no</option>
@@ -32,9 +31,12 @@
         <form id="update_form" action="{{ route('test-modal.update', ':id') }}" method="post">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
-            <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" id="modal_name" required />
-            <x-admin.form.input class="col-6 mb-5" label="Number" name="number" type="number" value="" id="modal_number" required />
-            <x-admin.form.select-manual class="col-6 mb-5" label="Select" name="select" value="" id="modal_select" data-dropdown-parent="#modal_show">
+            <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value=""
+                id="modal_name" required />
+            <x-admin.form.input class="col-6 mb-5" label="Number" name="number" type="number" value=""
+                id="modal_number" required />
+            <x-admin.form.select-manual class="col-6 mb-5" label="Select" name="select" value="" id="modal_select"
+                data-dropdown-parent="#modal_show">
                 <option value=""></option>
                 <option value="yes">yes</option>
                 <option value="no">no</option>
@@ -42,25 +44,21 @@
             <x-admin.button.modal-update />
         </form>
     </x-admin.modal.default>
-
 @endsection
 
 @section('head_button')
-
     <x-admin.content.header-button>
         <x-admin.button.modal-create />
     </x-admin.content.header-button>
-
 @endsection
 
 @section('styles')
-
 @endsection
 
 @push('scripts')
-
-    <x-admin.menu.show menu="menu-test"/>
-    <x-admin.menu.active menu="menu-test-modal"/>
+    <x-admin.menu.show menu="menu-test" />
+    <x-admin.menu.active menu="menu-test-modal" />
+    <!-- prettier-ignore-start -->
     <x-admin.script.table>
         ajax: '{{ route('test.data') }}',
         columns: [
@@ -111,9 +109,10 @@
             },
         ],
     </x-admin.script.table>
+    <!-- prettier-ignore-end -->
     <script>
         // Aksi Add
-        $(document).on('click', '#modal_form_submit', function (e) {
+        $(document).on('click', '#modal_form_submit', function(e) {
             e.preventDefault();
             const form = $('#modal_form_form');
             const url = form.attr('action');
@@ -124,7 +123,7 @@
                 url: url,
                 type: 'POST',
                 data: data,
-                success: function (response) {
+                success: function(response) {
                     $('#modal_form_submit').attr('data-kt-indicator', 'off').prop('disabled', false);
                     $('#modal_add').modal('hide');
                     $('.table').DataTable().ajax.reload(null, false);
@@ -135,13 +134,13 @@
                     // Reset form
                     form.trigger('reset');
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     $('#modal_form_submit').attr('data-kt-indicator', 'off').prop('disabled', false);
 
                     if (xhr.status === 422) {
                         const errors = xhr.responseJSON.errors;
                         // Tampilkan pesan error validasi
-                        Object.keys(errors).forEach(function (key) {
+                        Object.keys(errors).forEach(function(key) {
                             toastr.error(errors[key][0], 'Validasi Gagal', {
                                 closeButton: true,
                                 progressBar: true,
@@ -169,7 +168,8 @@
                     $('#modal_number').val(response.number);
                     $('#modal_select').val(response.select).change();
                     // Perbarui action form dengan ID
-                    const updateUrl = `{{ route('test-modal.update', ':id') }}`.replace(':id', response.id);
+                    const updateUrl = `{{ route('test-modal.update', ':id') }}`.replace(':id', response
+                        .id);
                     $('#update_form').attr('action', updateUrl);
                     $('#modal_show').modal('show');
                 },
@@ -181,7 +181,7 @@
     </script>
     <script>
         //Aksi Update
-        $(document).on('submit', '#update_form', function (e) {
+        $(document).on('submit', '#update_form', function(e) {
             e.preventDefault(); // Mencegah form dari pengiriman normal
             const form = $(this);
             const url = form.attr('action');
@@ -192,7 +192,7 @@
                 url: url,
                 type: 'POST',
                 data: data,
-                success: function (response) {
+                success: function(response) {
                     $('#update_button').attr('data-kt-indicator', 'off').prop('disabled', false);
                     $('#modal_show').modal('hide');
                     $('.table').DataTable().ajax.reload(null, false);
@@ -201,12 +201,12 @@
                         progressBar: true,
                     });
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     $('#update_button').attr('data-kt-indicator', 'off').prop('disabled', false);
                     if (xhr.status === 422) {
                         const errors = xhr.responseJSON.errors;
                         // Tampilkan pesan error validasi
-                        Object.keys(errors).forEach(function (key) {
+                        Object.keys(errors).forEach(function(key) {
                             toastr.error(errors[key][0], 'Validasi Gagal', {
                                 closeButton: true,
                                 progressBar: true,
@@ -221,7 +221,7 @@
     </script>
     <script>
         //Aksi Delete
-        $(document).on('click', '.btn-delete', function (e) {
+        $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault(); // Mencegah aksi default tombol
 
             const id = $(this).data('id'); // Ambil ID dari atribut data-id
@@ -241,8 +241,11 @@
                     $.ajax({
                         url: url,
                         type: 'post',
-                        data: {_method: 'delete', _token :token},
-                        success: function (response) {
+                        data: {
+                            _method: 'delete',
+                            _token: token
+                        },
+                        success: function(response) {
                             // Reload DataTable
                             $('.table').DataTable().ajax.reload(null, false);
                             // Tampilkan notifikasi sukses
@@ -252,17 +255,18 @@
                                 'success'
                             )
                         },
-                        error: function (xhr) {
+                        error: function(xhr) {
                             if (xhr.status === 403) {
                                 toastr.error(xhr.responseJSON.message, 'Gagal', {
                                     closeButton: true,
                                     progressBar: true,
                                 });
                             } else {
-                                toastr.error('Terjadi kesalahan saat menghapus data!', 'Gagal', {
-                                    closeButton: true,
-                                    progressBar: true,
-                                });
+                                toastr.error('Terjadi kesalahan saat menghapus data!',
+                                    'Gagal', {
+                                        closeButton: true,
+                                        progressBar: true,
+                                    });
                             }
                         }
                     });
@@ -270,5 +274,4 @@
             })
         });
     </script>
-
 @endpush

@@ -11,7 +11,7 @@ class TestStandartController extends Controller
 {
     public function index()
     {
-        return view('admin.test.standart.index',[
+        return view('admin.test.standart.index', [
             'title' => 'Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
         ]);
@@ -36,7 +36,7 @@ class TestStandartController extends Controller
     {
         $data = TestData::FindOrFail($id);
 
-        return view('admin.test.standart.show',[
+        return view('admin.test.standart.show', [
             'title' => 'Detail Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
             'data' => $data,
@@ -47,7 +47,7 @@ class TestStandartController extends Controller
     {
         $data = TestData::FindOrFail($id);
 
-        return view('admin.test.standart.edit',[
+        return view('admin.test.standart.edit', [
             'title' => 'Edit Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
             'data' => $data,
@@ -57,7 +57,7 @@ class TestStandartController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|unique:test_data,name,'.$id,
+            'name' => 'required|unique:test_data,name,' . $id,
         ], [
             'name.required' => 'Nama wajib diisi!',
             'name.unique' => 'Nama sudah terdaftar, silakan gunakan nama lain!',
@@ -84,7 +84,7 @@ class TestStandartController extends Controller
     public function data()
     {
         $data = TestData::query()
-            ->select('id','name','desc','number','select');
+            ->select('id', 'name', 'desc', 'number', 'select');
 
         return datatables()->of($data)
             ->addIndexColumn()

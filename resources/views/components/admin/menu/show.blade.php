@@ -1,3 +1,3 @@
 <script>
-    document.getElementById('{{$menu}}').classList.add('show');
+    document.getElementById('{{ $menu }}').classList.add('show');
 </script>

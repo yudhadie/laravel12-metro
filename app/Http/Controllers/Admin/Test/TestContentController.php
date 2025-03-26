@@ -15,7 +15,7 @@ class TestContentController extends Controller
 {
     public function index()
     {
-        return view('admin.test.content.index',[
+        return view('admin.test.content.index', [
             'title' => 'Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
         ]);
@@ -25,7 +25,7 @@ class TestContentController extends Controller
     {
         $tag = TestTag::all();
 
-        return view('admin.test.content.create',[
+        return view('admin.test.content.create', [
             'title' => 'Add Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
             'tags' => $tag,
@@ -46,7 +46,7 @@ class TestContentController extends Controller
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $gallerys) {
                 $img = $gallerys;
-                $gallery = 'uploads/test/'.Str::random(10).'.'.$img->extension();
+                $gallery = 'uploads/test/' . Str::random(10) . '.' . $img->extension();
                 $image = ImageManager::imagick()->read(file_get_contents($img));
                 $image->scale(height: 1000);
                 $image->save($gallery);
@@ -66,7 +66,7 @@ class TestContentController extends Controller
     {
         $data = TestData::FindOrFail($id);
 
-        return view('admin.test.content.show',[
+        return view('admin.test.content.show', [
             'title' => 'Detail Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
             'data' => $data,
@@ -79,7 +79,7 @@ class TestContentController extends Controller
         $tag = TestTag::all();
         $selectedTags = $data->tag->pluck('id')->toArray();
 
-        return view('admin.test.content.edit',[
+        return view('admin.test.content.edit', [
             'title' => 'Edit Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
             'data' => $data,
@@ -92,7 +92,7 @@ class TestContentController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|unique:test_data,name,'.$id,
+            'name' => 'required|unique:test_data,name,' . $id,
         ], [
             'name.required' => 'Nama wajib diisi!',
             'name.unique' => 'Nama sudah terdaftar, silakan gunakan nama lain!',
@@ -107,7 +107,7 @@ class TestContentController extends Controller
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $gallerys) {
                 $img = $gallerys;
-                $gallery = 'uploads/test/'.Str::random(10).'.'.$img->extension();
+                $gallery = 'uploads/test/' . Str::random(10) . '.' . $img->extension();
                 $image = ImageManager::imagick()->read(file_get_contents($img));
                 $image->scale(height: 1000);
                 $image->save($gallery);

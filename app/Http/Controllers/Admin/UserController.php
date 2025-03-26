@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.setting.user.index',[
+        return view('admin.setting.user.index', [
             'title' => 'Users',
             'breadcrumbs' => Breadcrumbs::render('user'),
         ]);
@@ -69,9 +69,9 @@ class UserController extends Controller
     {
         $data = User::FindOrFail($id);
 
-        return view('admin.setting.user.edit',[
+        return view('admin.setting.user.edit', [
             'title' => 'Edit Users',
-            'breadcrumbs' => Breadcrumbs::render('user.edit',$data),
+            'breadcrumbs' => Breadcrumbs::render('user.edit', $data),
             'data' => $data,
         ]);
     }
@@ -82,7 +82,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'email' => 'required|unique:users,email,'.$id,
+            'email' => 'required|unique:users,email,' . $id,
         ]);
 
         $data = User::find($id);
@@ -94,7 +94,7 @@ class UserController extends Controller
             }
 
             $img = $request->file('photo');
-            $photo = 'uploads/user/'.time().'.'.$request->photo->extension();
+            $photo = 'uploads/user/' . time() . '.' . $request->photo->extension();
             $image = ImageManager::imagick()->read(file_get_contents($img));
             $image->scale(height: 500);
             $image->save($photo);
@@ -146,7 +146,7 @@ class UserController extends Controller
         $id = Auth::user()->id;
         $data = User::FindOrFail($id);
 
-        return view('admin.setting.user.profile',[
+        return view('admin.setting.user.profile', [
             'title' => 'Profile',
             'breadcrumbs' => Breadcrumbs::render('profile'),
             'data' => $data,
@@ -156,7 +156,7 @@ class UserController extends Controller
     public function data()
     {
         $data = User::query()
-            ->select('id', 'name', 'email','active');
+            ->select('id', 'name', 'email', 'active');
 
         return datatables()->of($data)
             ->addIndexColumn()

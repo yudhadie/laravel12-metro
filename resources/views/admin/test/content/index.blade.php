@@ -1,7 +1,6 @@
 @extends('admin.templates.default')
 
 @section('content')
-
     <x-admin.card.default>
         <x-admin.content.table-api>
             <thead>
@@ -12,27 +11,23 @@
                 </tr>
             </thead>
         </x-admin.content.table-api>
-    </x-admin.default>
-
+    </x-admin.card.default>
 @endsection
 
 @section('head_button')
-
     <x-admin.content.header-button>
-        <a href="{{route('test-content.create')}}" class="btn btn-sm fw-bold btn-primary">Create</a>
+        <a href="{{ route('test-content.create') }}" class="btn btn-sm fw-bold btn-primary">Create</a>
     </x-admin.content.header-button>
-
 @endsection
 
 @section('styles')
 @endsection
 
 @push('scripts')
-
-    <x-admin.menu.show menu="menu-test"/>
-    <x-admin.menu.active menu="menu-test-content"/>
-
-    <x-admin.alert.delete/>
+    <x-admin.menu.show menu="menu-test" />
+    <x-admin.menu.active menu="menu-test-content" />
+    <x-admin.alert.delete />
+    <!-- prettier-ignore-start -->
     <x-admin.script.table>
         ajax: '{{ route('test.data') }}',
         columns: [
@@ -51,12 +46,10 @@
                 className: 'dt-center',
                 render: function(data, type, row) {
                     return `
-                        <a href="{{route('test-content.index')}}/${data}" class="btn btn-icon btn-active-light-primary w-30px h-30px me-3" title="Show details">
-                            <i class="bi bi-eye"></i>
-                        </a>`;
+                        <x-admin.button.icon href="{{route('test-content.index')}}/${data}" type="show" />`;
                 }
             },
         ],
     </x-admin.script.table>
-
+    <!-- prettier-ignore-end -->
 @endpush

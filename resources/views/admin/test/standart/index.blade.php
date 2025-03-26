@@ -1,7 +1,6 @@
 @extends('admin.templates.default')
 
 @section('content')
-
     <x-admin.card.default>
         <x-admin.content.table-api>
             <thead>
@@ -14,12 +13,12 @@
                 </tr>
             </thead>
         </x-admin.content.table-api>
-    </x-admin.default>
-
+    </x-admin.card.default>
     <x-admin.modal.create :title="$title" action="{{ route('test-standart.store') }}">
         <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" required />
         <x-admin.form.input class="col-6 mb-5" label="Number" name="number" type="number" value="" required />
-        <x-admin.form.select-manual class="col-6 mb-5" label="Select" name="select" value="" collection='' data-dropdown-parent="#modal_add" >
+        <x-admin.form.select-manual class="col-6 mb-5" label="Select" name="select" value="" collection=''
+            data-dropdown-parent="#modal_add">
             <option value=""></option>
             <option value="yes">yes</option>
             <option value="no">no</option>
@@ -27,26 +26,23 @@
     </x-admin.modal.create>
 
     <x-admin.form.delete />
-
 @endsection
 
 @section('head_button')
-
     <x-admin.content.header-button>
         <x-admin.button.modal-create />
     </x-admin.content.header-button>
-
 @endsection
 
 @section('styles')
 @endsection
 
 @push('scripts')
+    <x-admin.menu.show menu="menu-test" />
+    <x-admin.menu.active menu="menu-test-standart" />
 
-    <x-admin.menu.show menu="menu-test"/>
-    <x-admin.menu.active menu="menu-test-standart"/>
-
-    <x-admin.alert.delete/>
+    <x-admin.alert.delete />
+    <!-- prettier-ignore-start -->
     <x-admin.script.table>
         ajax: '{{ route('test.data') }}',
         columns: [
@@ -90,21 +86,9 @@
     </x-admin.script.table>
     <x-admin.script.validation>
         fields: {
-            'name': {
-                validators: {
-                    notEmpty: {
-                        message: 'Silahkan isi nama!'
-                    }
-                }
-            },
-            'number': {
-                validators: {
-                    notEmpty: {
-                        message: 'Silahkan isi number!'
-                    }
-                }
-            },
+            'name': {validators: {notEmpty: {message: 'Silahkan isi nama!'}}},
+            'number': {validators: {notEmpty: {message: 'Silahkan isi number!'}}},
         },
     </x-admin.script.validation>
-
+    <!-- prettier-ignore-end -->
 @endpush

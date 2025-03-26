@@ -2,7 +2,7 @@
     {{ csrf_field() }} {{ method_field('PUT') }}
     <div class="d-flex flex-column fv-row">
         <div class="row mb-7">
-            {{$slot}}
+            {{ $slot }}
         </div>
     </div>
 </form>

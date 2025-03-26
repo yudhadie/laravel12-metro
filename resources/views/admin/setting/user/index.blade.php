@@ -1,7 +1,6 @@
 @extends('admin.templates.default')
 
 @section('content')
-
     <x-admin.card.default>
         <x-admin.content.table-api>
             <thead>
@@ -15,40 +14,39 @@
                 </tr>
             </thead>
         </x-admin.content.table-api>
-    </x-admin.default>
+        </x-admin.default>
 
-    <x-admin.modal.create :title="$title" action="{{ route('user.store') }}" enctype="multipart/form-data">
-        <x-admin.form.input class="col-12 mb-5" label="Username" name="username" type="text" value="" required />
-        <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" required />
-        <x-admin.form.input class="col-6 mb-5" label="Email" name="email" type="text" value="" required />
-        <x-admin.form.input class="col-6 mb-5" label="Password" name="password" type="password" value="" required />
-        <x-admin.form.select-manual class="col-6 mb-5" label="Role" name="role" value="" collection='' data-dropdown-parent="#modal_add" required>
-            <option value=""></option>
-            <option value="admin">admin</option>
-            <option value="user">user</option>
-        </x-admin.form.select-manual>
-    </x-admin.modal.create>
+        <x-admin.modal.create :title="$title" action="{{ route('user.store') }}" enctype="multipart/form-data">
+            <x-admin.form.input class="col-12 mb-5" label="Username" name="username" type="text" value="" required />
+            <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" required />
+            <x-admin.form.input class="col-6 mb-5" label="Email" name="email" type="text" value="" required />
+            <x-admin.form.input class="col-6 mb-5" label="Password" name="password" type="password" value=""
+                required />
+            <x-admin.form.select-manual class="col-6 mb-5" label="Role" name="role" value="" collection=''
+                data-dropdown-parent="#modal_add" required>
+                <option value=""></option>
+                <option value="admin">admin</option>
+                <option value="user">user</option>
+            </x-admin.form.select-manual>
+        </x-admin.modal.create>
 
-    <x-admin.form.delete />
+        <x-admin.form.delete />
+    @endsection
 
-@endsection
+    @section('head_button')
+        <x-admin.content.header-button>
+            <x-admin.button.modal-create />
+        </x-admin.content.header-button>
+    @endsection
 
-@section('head_button')
+    @section('styles')
+    @endsection
 
-    <x-admin.content.header-button>
-        <x-admin.button.modal-create />
-    </x-admin.content.header-button>
-
-@endsection
-
-@section('styles')
-@endsection
-
-@push('scripts')
-
-    <x-admin.menu.show menu="menu-setting"/>
-    <x-admin.menu.active menu="menu-setting-user"/>
-    <x-admin.alert.delete/>
+    @push('scripts')
+        <x-admin.menu.show menu="menu-setting" />
+        <x-admin.menu.active menu="menu-setting-user" />
+        <x-admin.alert.delete />
+        <!-- prettier-ignore-start -->
     <x-admin.script.table>
         ajax: '{{ route('user.data') }}',
         columns: [
@@ -102,5 +100,5 @@
             'role': {validators: {notEmpty: {message: 'Silahkan pilih satu!'}}},
         },
     </x-admin.script.validation>
-
-@endpush
+    <!-- prettier-ignore-end -->
+    @endpush

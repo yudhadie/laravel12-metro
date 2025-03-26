@@ -1,7 +1,6 @@
 <script>
     @if (session('success'))
-        toastr.options =
-        {
+        toastr.options = {
             "closeButton": true,
             "debug": false,
             "newestOnTop": true,
@@ -22,8 +21,7 @@
     @endif
 
     @if (session('info'))
-    toastr.options =
-        {
+        toastr.options = {
             "closeButton": true,
             "debug": false,
             "newestOnTop": true,
@@ -44,8 +42,7 @@
     @endif
 
     @if (session('error'))
-       toastr.options =
-        {
+        toastr.options = {
             "closeButton": true,
             "debug": false,
             "newestOnTop": true,

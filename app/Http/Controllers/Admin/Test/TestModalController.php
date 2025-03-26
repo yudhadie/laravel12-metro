@@ -11,7 +11,7 @@ class TestModalController extends Controller
 {
     public function index()
     {
-        return view('admin.test.modal.index',[
+        return view('admin.test.modal.index', [
             'title' => 'Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
         ]);
@@ -45,7 +45,7 @@ class TestModalController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|unique:test_data,name,'.$id,
+            'name' => 'required|unique:test_data,name,' . $id,
         ], [
             'name.required' => 'Nama wajib diisi!',
             'name.unique' => 'Nama sudah terdaftar, silakan gunakan nama lain!',

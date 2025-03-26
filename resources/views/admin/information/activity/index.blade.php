@@ -1,7 +1,6 @@
 @extends('admin.templates.default')
 
 @section('content')
-
     <x-admin.card.default>
         <x-admin.content.table-api>
             <thead>
@@ -16,23 +15,19 @@
                 </tr>
             </thead>
         </x-admin.content.table-api>
-    </x-admin.default>
-
+    </x-admin.card.default>
 @endsection
 
 @section('head_button')
-
 @endsection
 
 @section('styles')
-
 @endsection
 
 @push('scripts')
-
-    <x-admin.menu.show menu="menu-info"/>
-    <x-admin.menu.active menu="menu-info-activity"/>
-
+    <x-admin.menu.show menu="menu-info" />
+    <x-admin.menu.active menu="menu-info-activity" />
+    <!-- prettier-ignore-start -->
     <x-admin.script.table>
         ajax: '{{ route('activity.data') }}',
         columns: [
@@ -78,5 +73,5 @@
         ],
         order: [[6, 'desc']],
     </x-admin.script.table>
-
+    <!-- prettier-ignore-end -->
 @endpush

@@ -1,7 +1,6 @@
 @extends('admin.templates.default')
 
 @section('content')
-
     <x-admin.card.default>
         <x-admin.content.table-api>
             <thead>
@@ -12,46 +11,47 @@
                 </tr>
             </thead>
         </x-admin.content.table-api>
-    </x-admin.default>
+    </x-admin.card.default>
 
-    <x-admin.modal.create :title="$title" action="{{ route('test-image.store') }}" enctype="multipart/form-data" >
+    <x-admin.modal.create :title="$title" action="{{ route('test-image.store') }}" enctype="multipart/form-data">
         <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" required />
-        <x-admin.form.input class="col-12 mb-5" label="Image" name="cover" type="file" value="" accept=".jpg,.jpeg,.png" required />
+        <x-admin.form.input class="col-12 mb-5" label="Image" name="cover" type="file" value=""
+            accept=".jpg,.jpeg,.png" required />
     </x-admin.modal.create>
 
     <x-admin.modal.default :title="'Detail Data'" id="modal_show">
         @csrf
         @method('PUT')
-        <form id="update_form" action="{{ route('test-image.update', ':id') }}" method="post" enctype="multipart/form-data" >
+        <form id="update_form" action="{{ route('test-image.update', ':id') }}" method="post"
+            enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PUT') }}
-            <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value="" id="modal_name" required />
-            <x-admin.form.input class="col-12 mb-5" label="Image" name="cover" type="file" value="" id="modal_img" accept=".jpg,.jpeg,.png" />
+            <x-admin.form.input class="col-12 mb-5" label="Nama" name="name" type="text" value=""
+                id="modal_name" required />
+            <x-admin.form.input class="col-12 mb-5" label="Image" name="cover" type="file" value=""
+                id="modal_img" accept=".jpg,.jpeg,.png" />
             <div class="mb-3 text-center">
-                <img id="modal_image" src="" alt="Gambar Tidak Tersedia" class="img-fluid" style="display: none; max-height: 200px; object-fit: contain;">
+                <img id="modal_image" src="" alt="Gambar Tidak Tersedia" class="img-fluid"
+                    style="display: none; max-height: 200px; object-fit: contain;">
             </div>
             <x-admin.button.modal-update />
         </form>
     </x-admin.modal.default>
-
 @endsection
 
 @section('head_button')
-
     <x-admin.content.header-button>
         <x-admin.button.modal-create />
     </x-admin.content.header-button>
-
 @endsection
 
 @section('styles')
-
 @endsection
 
 @push('scripts')
-
-    <x-admin.menu.show menu="menu-test"/>
-    <x-admin.menu.active menu="menu-test-image"/>
+    <x-admin.menu.show menu="menu-test" />
+    <x-admin.menu.active menu="menu-test-image" />
+    <!-- prettier-ignore-start -->
     <x-admin.script.table>
         ajax: '{{ route('test.data') }}',
         columns: [
@@ -83,8 +83,9 @@
             },
         ],
     </x-admin.script.table>
+    <!-- prettier-ignore-end -->
     <script>
-        $('#modal_form_submit').on('click', function (e) {
+        $('#modal_form_submit').on('click', function(e) {
             e.preventDefault();
             const form = $('#modal_form_form')[0]; // Ambil form sebagai DOM object
             const formData = new FormData(form); // Buat FormData dari form
@@ -96,8 +97,8 @@
                 data: formData,
                 contentType: false,
                 cache: false,
-                processData:false,
-                success: function (response) {
+                processData: false,
+                success: function(response) {
                     $('#modal_form_submit').attr('data-kt-indicator', 'off').prop('disabled', false);
                     $('#modal_add').modal('hide');
                     $('.table').DataTable().ajax.reload(null, false);
@@ -108,12 +109,12 @@
                     // Reset form
                     $('#modal_form_form').trigger('reset');
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     $('#modal_form_submit').attr('data-kt-indicator', 'off').prop('disabled', false);
                     if (xhr.status === 422) {
                         const errors = xhr.responseJSON.errors;
                         // Tampilkan pesan error validasi
-                        Object.keys(errors).forEach(function (key) {
+                        Object.keys(errors).forEach(function(key) {
                             toastr.error(errors[key][0], 'Validasi Gagal', {
                                 closeButton: true,
                                 progressBar: true,
@@ -143,7 +144,8 @@
                         $('#modal_image').hide(); // Sembunyikan elemen jika gambar tidak ada
                     }
                     // Perbarui action form dengan ID
-                    const updateUrl = `{{ route('test-image.update', ':id') }}`.replace(':id', response.id);
+                    const updateUrl = `{{ route('test-image.update', ':id') }}`.replace(':id', response
+                        .id);
                     $('#update_form').attr('action', updateUrl);
                     $('#modal_show').modal('show');
                 },
@@ -155,7 +157,7 @@
     </script>
     <script>
         //Aksi Update
-        $(document).on('submit', '#update_form', function (e) {
+        $(document).on('submit', '#update_form', function(e) {
             e.preventDefault(); // Mencegah pengiriman form secara normal
             const form = $('#update_form')[0]; // Ambil form sebagai DOM object
             const url = $(form).attr('action'); // Ambil action URL dari form
@@ -168,7 +170,7 @@
                 data: formData,
                 processData: false, // Nonaktifkan pengolahan data otomatis
                 contentType: false, // Nonaktifkan pengaturan content-type otomatis
-                success: function (response) {
+                success: function(response) {
                     $('#update_button').attr('data-kt-indicator', 'off').prop('disabled', false);
                     $('#modal_show').modal('hide');
                     $('.table').DataTable().ajax.reload(null, false); // Reload DataTable
@@ -178,12 +180,12 @@
                     });
                     $('#update_form').trigger('reset');
                 },
-                error: function (xhr) {
+                error: function(xhr) {
                     $('#update_button').attr('data-kt-indicator', 'off').prop('disabled', false);
                     if (xhr.status === 422) {
                         const errors = xhr.responseJSON.errors;
                         // Tampilkan pesan error validasi
-                        Object.keys(errors).forEach(function (key) {
+                        Object.keys(errors).forEach(function(key) {
                             toastr.error(errors[key][0], 'Validasi Gagal', {
                                 closeButton: true,
                                 progressBar: true,
@@ -198,7 +200,7 @@
     </script>
     <script>
         //Aksi Delete
-        $(document).on('click', '.btn-delete', function (e) {
+        $(document).on('click', '.btn-delete', function(e) {
             e.preventDefault(); // Mencegah aksi default tombol
 
             const id = $(this).data('id'); // Ambil ID dari atribut data-id
@@ -217,8 +219,11 @@
                     $.ajax({
                         url: url,
                         type: 'post',
-                        data: {_method: 'delete', _token :token},
-                        success: function (response) {
+                        data: {
+                            _method: 'delete',
+                            _token: token
+                        },
+                        success: function(response) {
                             // Reload DataTable
                             $('.table').DataTable().ajax.reload(null, false);
                             // Tampilkan notifikasi sukses
@@ -228,17 +233,18 @@
                                 'success'
                             )
                         },
-                        error: function (xhr) {
+                        error: function(xhr) {
                             if (xhr.status === 403) {
                                 toastr.error(xhr.responseJSON.message, 'Gagal', {
                                     closeButton: true,
                                     progressBar: true,
                                 });
                             } else {
-                                toastr.error('Terjadi kesalahan saat menghapus data!', 'Gagal', {
-                                    closeButton: true,
-                                    progressBar: true,
-                                });
+                                toastr.error('Terjadi kesalahan saat menghapus data!',
+                                    'Gagal', {
+                                        closeButton: true,
+                                        progressBar: true,
+                                    });
                             }
                         }
                     });
@@ -246,5 +252,4 @@
             })
         });
     </script>
-
 @endpush

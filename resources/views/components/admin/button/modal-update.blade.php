@@ -4,7 +4,7 @@
         <button type="submit" class="btn btn-primary" id="update_button" data-kt-permissions-modal-action="submit">
             <span class="indicator-label">Submit</span>
             <span class="indicator-progress">Please wait...
-            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
         </button>
     </div>
 </div>

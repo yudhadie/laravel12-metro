@@ -1,13 +1,14 @@
 @extends('web.templates.default')
 
 @section('content')
-
     <div class="mb-n10 mb-lg-n20 z-index-2">
         <div class="container">
             <div class="text-center mb-17">
-                <h3 class="fs-2hx text-dark mb-5" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">How it Works</h3>
+                <h3 class="fs-2hx text-dark mb-5" id="how-it-works" data-kt-scroll-offset="{default: 100, lg: 150}">How it
+                    Works</h3>
                 <div class="fs-5 text-muted fw-bold">Save thousands to millions of bucks by using single tool
-                <br />for different amazing and great useful admin</div>
+                    <br />for different amazing and great useful admin
+                </div>
             </div>
             <div class="row w-100 gy-10 mb-md-20">
                 <div class="col-md-4 px-5">
@@ -49,11 +50,8 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
-
-    <x-admin.menu.active menu="menu-home"/>
-
+    <x-admin.menu.active menu="menu-home" />
 @endpush

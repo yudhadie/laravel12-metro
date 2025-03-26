@@ -1,5 +1,5 @@
 <script>
-    $('button#delete').on('click',function(e){
+    $('button#delete').on('click', function(e) {
         e.preventDefault();
         var href = $(this).attr('href');
         Swal.fire({
@@ -10,11 +10,11 @@
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya, Hapus saja!'
-            }).then((result) => {
-                if (result.value) {
-                    document.getElementById('deleteMedia').action = href;
-                    document.getElementById('deleteMedia').submit();
-                    Swal.fire(
+        }).then((result) => {
+            if (result.value) {
+                document.getElementById('deleteMedia').action = href;
+                document.getElementById('deleteMedia').submit();
+                Swal.fire(
                     'Terhapus!!',
                     'Data kamu berhasil di hapus',
                     'success'

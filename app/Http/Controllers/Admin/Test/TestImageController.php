@@ -13,7 +13,7 @@ class TestImageController extends Controller
 {
     public function index()
     {
-        return view('admin.test.image.index',[
+        return view('admin.test.image.index', [
             'title' => 'Test Data',
             'breadcrumbs' => Breadcrumbs::render('test'),
         ]);
@@ -37,7 +37,7 @@ class TestImageController extends Controller
 
         if ($request->hasFile('cover')) {
             $img = $request->file('cover');
-            $cover = 'uploads/test/'.time().'.'.$request->cover->extension();
+            $cover = 'uploads/test/' . time() . '.' . $request->cover->extension();
             $image = ImageManager::imagick()->read(file_get_contents($img));
             $image->scale(height: 1000);
             $image->save($cover);
@@ -65,7 +65,7 @@ class TestImageController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|unique:test_data,name,'.$id,
+            'name' => 'required|unique:test_data,name,' . $id,
         ], [
             'name.required' => 'Nama wajib diisi!',
             'name.unique' => 'Nama sudah terdaftar, silakan gunakan nama lain!',
@@ -83,7 +83,7 @@ class TestImageController extends Controller
             }
 
             $img = $request->file('cover');
-            $cover = 'uploads/test/'.time().'.'.$request->cover->extension();
+            $cover = 'uploads/test/' . time() . '.' . $request->cover->extension();
             $image = ImageManager::imagick()->read(file_get_contents($img));
             $image->scale(height: 1000);
             $image->save($cover);
